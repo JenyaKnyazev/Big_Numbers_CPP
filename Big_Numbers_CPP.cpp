@@ -15,7 +15,7 @@ void print(vector<int> vec) {
         cout << x;
     cout << endl;
 }
-void refresh1(vector<int> &vec) {
+void refresh1(vector<int>& vec) {
     int i;
     for (i = vec.size() - 1; i > 0; i--) {
         vec[i - 1] += vec[i] / 10;
@@ -26,7 +26,7 @@ void refresh1(vector<int> &vec) {
         vec[1] %= 10;
     }
 }
-void refresh2(vector<int> &vec) {
+void refresh2(vector<int>& vec) {
     int i;
     for (i = 0; i < vec.size() - 1; i++) {
         vec[i]--;
@@ -50,9 +50,9 @@ int compare(vector<int>& a, vector<int>& b) {
     }
     return 0;
 }
-vector<int> add(vector<int> &a, vector<int> &b) {
-    vector<int> vec((a.size()>b.size())?a.size():b.size(),0);
-    int i,r;
+vector<int> add(vector<int>& a, vector<int>& b) {
+    vector<int> vec((a.size() > b.size()) ? a.size() : b.size(), 0);
+    int i, r;
     for (i = a.size() - 1, r = vec.size() - 1; i >= 0; i--, r--)
         vec[r] = a[i];
     for (i = b.size() - 1, r = vec.size() - 1; i >= 0; i--, r--)
@@ -62,7 +62,7 @@ vector<int> add(vector<int> &a, vector<int> &b) {
 }
 vector<int> subtract(vector<int>& a, vector<int>& b) {
     vector<int> vec(a);
-    int i,r;
+    int i, r;
     for (i = vec.size() - 1, r = b.size() - 1; i >= 0 && r >= 0; i--, r--)
         vec[i] -= b[r];
     refresh2(vec);
@@ -71,9 +71,9 @@ vector<int> subtract(vector<int>& a, vector<int>& b) {
 vector<int> mult(vector<int>& a, vector<int>& b) {
     vector<int>vec(a.size() + b.size(), 0);
     int i, r;
-    for(i=a.size()-1;i>=0;i--)
+    for (i = a.size() - 1; i >= 0; i--)
         for (r = b.size() - 1; r >= 0; r--) {
-            vec[i+r+1] += a[i] * b[r];
+            vec[i + r + 1] += a[i] * b[r];
             refresh1(vec);
         }
     while (vec.size() > 1 && vec[0] == 0)
@@ -84,19 +84,23 @@ vector<int> modulu(vector<int>& a, vector<int>& b) {
     vector<int>res;
     int i;
     for (i = 0; i < a.size();) {
-        while (i < a.size() &&compare(res, b) == -1)
+        while (i < a.size() && compare(res, b) == -1)
             res.push_back(a[i++]);
+        while (res.size() > 0 && res[0] == 0)
+            res.erase(res.begin());
         while (compare(res, b) != -1)
-            res=subtract(res, b);
+            res = subtract(res, b);
     }
     while (res.size() > 1 && res[0] == 0)
         res.erase(res.begin());
+    if (res.size() == 0)
+        res.push_back(0);
     return res;
 }
 vector<int> div(vector<int>& a, vector<int>& b) {
     vector<int>res;
     vector<int>vec;
-    vector<int> r(1,1);
+    vector<int> r(1, 1);
     int i;
     for (i = 0; i < a.size();) {
         while (i < a.size() && compare(vec, b) == -1) {
@@ -107,7 +111,7 @@ vector<int> div(vector<int>& a, vector<int>& b) {
             vec = subtract(vec, b);
             res = add(res, r);
         }
-        while (vec.size()>0&&vec[0] == 0)
+        while (vec.size() > 0 && vec[0] == 0)
             vec.erase(vec.begin());
     }
     while (res.size() > 1 && res[0] == 0)
@@ -120,9 +124,9 @@ void run() {
     vector<int>b2;
     cout << "Big numbers C++" << endl;
     while (true) {
-        cout << endl << "Enter arithmetic operator + - * / % or other exit"<<endl;
+        cout << endl << "Enter arithmetic operator + - * / % or other exit" << endl;
         getline(cin, op);
-        if (op != "+"&&op!="-"&&op!="*"&&op!="/"&&op!="%")
+        if (op != "+" && op != "-" && op != "*" && op != "/" && op != "%")
             return;
         cout << "Enter first number" << endl;
         getline(cin, a);
@@ -150,28 +154,5 @@ int main()
     cout << "Good Bye" << endl;
     getline(cin, a);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
